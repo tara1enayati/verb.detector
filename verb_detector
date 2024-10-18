@@ -1,0 +1,35 @@
+import spacy
+
+# Load the spaCy model globally, instead of inside the function.
+nlp = spacy.load("en_core_web_sm")
+
+def detect_verb(sentence):
+    """
+    Detects the verbs in a given sentence using spaCy.
+
+    Args:
+        sentence (str): The input sentence as a string.
+
+    Returns:
+        list: A list of verbs found in the sentence. If no verbs are found, returns an empty list.
+    """
+    # Process the sentence using spaCy NLP pipeline
+    doc = nlp(sentence)
+    
+    # Extract verbs from the tokens
+    verbs = [token.text for token in doc if token.pos_ == "VERB"]
+    
+    return verbs
+
+# Taking user input and handling cases where no verbs might be found
+if __name__ == "__main__":
+    sentence = input("Write down your sentence: ").strip()
+    
+    if sentence:
+        verbs = detect_verb(sentence)
+        if verbs:
+            print(f"Verbs in the sentence: {verbs}")
+        else:
+            print("No verbs found in the sentence.")
+    else:
+        print("The input sentence is empty.")
